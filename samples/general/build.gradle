@@ -1,0 +1,14 @@
+plugins {
+    id "org.akhikhl.gretty" version "1.4.0"
+}
+
+apply plugin: "war"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":profiler")
+    runtime "com.google.guava:guava:19.0"
+}

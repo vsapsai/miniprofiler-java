@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    <description>MiniProfiler Tag Library</description>
+
+    <tlib-version>0.1</tlib-version>
+    <short-name>miniprofiler</short-name>
+    <uri>http://miniprofiler.com/jsp</uri>
+
+    <tag>
+        <description>
+            Renders MiniProfiler UI.
+        </description>
+        <name>includes</name>
+        <tag-class>com.miniprofiler.taglib.IncludesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>
+                Where to render MiniProfiler popup.
+            </description>
+            <name>position</name>
+            <type>com.miniprofiler.RenderPosition</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <description>
+                If trivial timings are displayed by default.
+            </description>
+            <name>showTrivial</name>
+            <type>java.lang.Boolean</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <description>
+                If "time with children" column displayed by default.
+            </description>
+            <name>showTimeWithChildren</name>
+            <type>java.lang.Boolean</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <description>
+                How many traces to show before removing the oldest.
+            </description>
+            <name>maxTracesToShow</name>
+            <type>java.lang.Integer</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <description>
+                When true, results buttons will not initially be shown, requiring keyboard activation.
+            </description>
+            <name>startHidden</name>
+            <type>java.lang.Boolean</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <description>
+                If min-max, clear, etc are rendered.
+            </description>
+            <name>showControls</name>
+            <type>java.lang.Boolean</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+</taglib>

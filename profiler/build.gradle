@@ -1,0 +1,23 @@
+apply plugin: "java"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "javax.servlet:javax.servlet-api:3.1+",
+                "com.google.guava:guava:19.0"
+    compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3+",
+            "commons-io:commons-io:2.4+",
+            "org.apache.commons:commons-lang3:3.4+",
+            "com.fasterxml.jackson.core:jackson-databind:2.8+"
+
+    testCompile "junit:junit:4.+"
+}
+
+test {
+    testLogging {
+        showStackTraces true
+        exceptionFormat "full"
+    }
+}

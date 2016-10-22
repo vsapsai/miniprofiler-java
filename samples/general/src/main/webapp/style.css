@@ -1,0 +1,3 @@
+body {
+    padding-left: 75px;  /* Move content from the edge so that MiniProfiler UI doesn't obscure it. */
+}
