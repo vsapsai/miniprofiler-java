@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ServletRequestProfilerProvider implements ProfilerProvider {
     private static final String ATTRIBUTE_NAME = ":mini-profiler:";
 
+    private UserProvider userProvider = new IpAddressProvider();
+
     @Override
     public MiniProfiler start(String sessionName) {
         ServletRequest currentRequest = ContextListener.getCurrentRequest();
@@ -13,6 +15,7 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
             return null;
         }
         MiniProfiler profiler = new MiniProfiler(getFullRequestUrl(currentRequest));
+        profiler.setUser(userProvider.getUser(currentRequest));
         currentRequest.setAttribute(ATTRIBUTE_NAME, profiler);
         return profiler;
     }
@@ -64,5 +67,13 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
             result = sb.toString();
         }
         return result;
+    }
+
+    public UserProvider getUserProvider() {
+        return userProvider;
+    }
+
+    public void setUserProvider(UserProvider userProvider) {
+        this.userProvider = userProvider;
     }
 }
