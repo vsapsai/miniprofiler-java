@@ -12,6 +12,7 @@ public class Settings {
     private Clock clock = Clock.systemUTC();
     private String contextPath = "";
     private String routeBasePath = "mini-profiler-resources/";
+    private int maxUnviewedProfiles = 20;
     private double trivialDurationThresholdMilliseconds = 2.0;
     private RenderPosition popupRenderPosition = RenderPosition.LEFT;
     private Boolean popupShowTrivial = false;
@@ -88,6 +89,14 @@ public class Settings {
 
     public String getAbsoluteRouteBasePath() {
         return getContextPath() + "/" + getRouteBasePath();
+    }
+
+    public int getMaxUnviewedProfiles() {
+        return maxUnviewedProfiles;
+    }
+
+    public void setMaxUnviewedProfiles(int maxUnviewedProfiles) {
+        this.maxUnviewedProfiles = maxUnviewedProfiles;
     }
 
     public double getTrivialDurationThresholdMilliseconds() {

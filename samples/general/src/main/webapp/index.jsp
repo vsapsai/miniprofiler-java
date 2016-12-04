@@ -17,6 +17,7 @@
         <li>
             Test popup position on <a href="popup-bottom-left.jsp">bottom left</a> and <a href="popup-bottom-right.jsp">bottom right</a>
         </li>
+        <li><a href="ajax.jsp">Test AJAX</a></li>
     </ul>
 </body>
 </html>

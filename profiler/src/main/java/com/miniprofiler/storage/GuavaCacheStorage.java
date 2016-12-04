@@ -1,5 +1,7 @@
 package com.miniprofiler.storage;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -14,16 +16,25 @@ import com.miniprofiler.MiniProfiler;
  * storage has to depend on Guava itself.
  */
 public class GuavaCacheStorage implements Storage {
-    private final Cache<UUID, MiniProfiler> cache;
+    private final static long DEFAULT_CACHE_SIZE = 10_000;
+    private final static long DEFAULT_CACHE_EXPIRATION_IN_MINUTES = 10;
 
-    public GuavaCacheStorage(Cache<UUID, MiniProfiler> cache) {
+    private final Cache<UUID, MiniProfiler> cache;
+    private final ProfilesViewingStorage unviewedProfilesStorage;
+
+    public GuavaCacheStorage(Cache<UUID, MiniProfiler> cache, Cache<String, Set<UUID>> unviewedProfilesCache) {
         this.cache = cache;
+        this.unviewedProfilesStorage = new ProfilesViewingStorage(unviewedProfilesCache.asMap());
     }
 
     public GuavaCacheStorage() {
         this(CacheBuilder.newBuilder()
-                .maximumSize(10_000)
-                .expireAfterAccess(10, TimeUnit.MINUTES)
+                .maximumSize(DEFAULT_CACHE_SIZE)
+                .expireAfterAccess(DEFAULT_CACHE_EXPIRATION_IN_MINUTES, TimeUnit.MINUTES)
+                .build(),
+            CacheBuilder.newBuilder()
+                .maximumSize(DEFAULT_CACHE_SIZE)
+                .expireAfterAccess(DEFAULT_CACHE_EXPIRATION_IN_MINUTES, TimeUnit.MINUTES)
                 .build());
     }
 
@@ -35,5 +46,20 @@ public class GuavaCacheStorage implements Storage {
     @Override
     public MiniProfiler load(UUID id) {
         return cache.getIfPresent(id);
+    }
+
+    @Override
+    public void setUnviewed(String user, UUID id) {
+        unviewedProfilesStorage.setUnviewed(user, id);
+    }
+
+    @Override
+    public void setViewed(String user, final UUID id) {
+        unviewedProfilesStorage.setViewed(user, id);
+    }
+
+    @Override
+    public List<UUID> getUnviewedIds(String user) {
+        return unviewedProfilesStorage.getUnviewedIds(user);
     }
 }

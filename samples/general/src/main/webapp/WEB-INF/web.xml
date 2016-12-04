@@ -30,4 +30,13 @@
         <servlet-name>TestMinSaveMillis</servlet-name>
         <url-pattern>/test-min-save-millis</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TestAjax</servlet-name>
+        <servlet-class>com.miniprofiler.samples.TestAjaxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestAjax</servlet-name>
+        <url-pattern>/ajax-handler</url-pattern>
+    </servlet-mapping>
 </web-app>

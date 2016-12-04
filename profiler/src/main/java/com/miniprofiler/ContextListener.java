@@ -1,11 +1,13 @@
 package com.miniprofiler;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
+import java.util.EnumSet;
 
 /**
  * MiniProfiler integration point.
@@ -26,6 +28,9 @@ public class ContextListener implements ServletContextListener, ServletRequestLi
         servletContext
             .addServlet("RequestHandlerServlet", RequestHandlerServlet.class)
             .addMapping("/" + settings.getRouteBasePath() + "*");
+        servletContext
+                .addFilter("RequestHandlerFilter", RequestHandlerFilter.class)
+                .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), /* isMatchAfter =*/false, "/*");
     }
 
     @Override

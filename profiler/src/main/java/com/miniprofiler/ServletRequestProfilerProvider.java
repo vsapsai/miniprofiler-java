@@ -3,10 +3,25 @@ package com.miniprofiler;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import com.miniprofiler.storage.Storage;
+
 public class ServletRequestProfilerProvider implements ProfilerProvider {
     private static final String ATTRIBUTE_NAME = ":mini-profiler:";
 
     private UserProvider userProvider = new IpAddressProvider();
+
+    public static MiniProfiler getProfilerFromRequest(ServletRequest request) {
+        return (MiniProfiler)request.getAttribute(ATTRIBUTE_NAME);
+    }
+
+    static void saveProfiler(MiniProfiler profiler) {
+        MiniProfiler.getSettings().ensureStorageStrategy();
+        Storage storage = MiniProfiler.getSettings().getStorage();
+        storage.save(profiler);
+        if (!profiler.hasUserViewed()) {
+            storage.setUnviewed(profiler.getUser(), profiler.getId());
+        }
+    }
 
     @Override
     public MiniProfiler start(String sessionName) {
@@ -39,9 +54,7 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
             currentProfiler.setName(name);
         }
 
-        // Save profiler.
-        MiniProfiler.getSettings().ensureStorageStrategy();
-        MiniProfiler.getSettings().getStorage().save(currentProfiler);
+        saveProfiler(currentProfiler);
     }
 
     @Override
@@ -50,7 +63,7 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
         if (currentRequest == null) {
             return null;
         }
-        return (MiniProfiler)currentRequest.getAttribute(ATTRIBUTE_NAME);
+        return getProfilerFromRequest(currentRequest);
     }
 
     private String getFullRequestUrl(ServletRequest request) {
