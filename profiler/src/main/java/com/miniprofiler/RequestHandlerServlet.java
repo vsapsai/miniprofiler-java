@@ -24,6 +24,9 @@ public class RequestHandlerServlet extends HttpServlet {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public static String renderIncludes(MiniProfiler currentProfiler, RenderOptions renderOptions) {
+        if (currentProfiler.isNull()) {
+            return "";
+        }
         String source;
         try {
             source = getUiFileContent("/include.partial.html");

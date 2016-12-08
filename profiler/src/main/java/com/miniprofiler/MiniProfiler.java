@@ -14,8 +14,8 @@ import com.miniprofiler.serialization.InstantSerializer;
 
 // TODO(vsapsai): implement
 public class MiniProfiler {
-
     private final static Settings settings = new Settings();
+    public final static MiniProfiler NULL = new NullMiniProfiler();
 
     private final UUID id;
     private String name;
@@ -67,6 +67,11 @@ public class MiniProfiler {
         id = UUID.randomUUID();
         started = now();
         root = new Timing(this, null, url);
+    }
+
+    @JsonIgnore
+    public boolean isNull() {
+        return false;
     }
 
     @JsonProperty("Id")

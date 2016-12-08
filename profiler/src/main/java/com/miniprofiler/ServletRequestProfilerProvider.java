@@ -27,7 +27,7 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
     public MiniProfiler start(String sessionName) {
         ServletRequest currentRequest = ContextListener.getCurrentRequest();
         if (currentRequest == null) {
-            return null;
+            return MiniProfiler.NULL;
         }
         MiniProfiler profiler = new MiniProfiler(getFullRequestUrl(currentRequest));
         profiler.setUser(userProvider.getUser(currentRequest));
@@ -38,6 +38,9 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
     @Override
     public void stop(boolean discardResults) {
         MiniProfiler currentProfiler = getCurrentProfiler();
+        if (currentProfiler.isNull()) {
+            return;
+        }
         // Stop profiler.
         if (!currentProfiler.stopImpl()) {
             return;
@@ -59,11 +62,12 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
 
     @Override
     public MiniProfiler getCurrentProfiler() {
+        MiniProfiler currentProfiler = null;
         ServletRequest currentRequest = ContextListener.getCurrentRequest();
-        if (currentRequest == null) {
-            return null;
+        if (currentRequest != null) {
+            currentProfiler = getProfilerFromRequest(currentRequest);
         }
-        return getProfilerFromRequest(currentRequest);
+        return (currentProfiler != null) ? currentProfiler : MiniProfiler.NULL;
     }
 
     private String getFullRequestUrl(ServletRequest request) {

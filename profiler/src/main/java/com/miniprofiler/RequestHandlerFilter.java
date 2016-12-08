@@ -28,6 +28,9 @@ public class RequestHandlerFilter implements Filter {
 
         chain.doFilter(request, response);
 
+        if ((currentProfiler == null) || currentProfiler.isNull()) {
+            return;
+        }
         ServletRequestProfilerProvider.saveProfiler(currentProfiler);
 
         // Handle unviewed profiles.
