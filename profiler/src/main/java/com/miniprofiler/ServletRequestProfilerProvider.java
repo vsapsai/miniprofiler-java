@@ -29,6 +29,13 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
         if (currentRequest == null) {
             return MiniProfiler.NULL;
         }
+        if (currentRequest instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) currentRequest;
+            String path = httpRequest.getServletPath();
+            if (isPathMatchingProfilerRouteBasePath(path)) {
+                return MiniProfiler.NULL;
+            }
+        }
         MiniProfiler profiler = new MiniProfiler(getFullRequestUrl(currentRequest));
         profiler.setUser(userProvider.getUser(currentRequest));
         currentRequest.setAttribute(ATTRIBUTE_NAME, profiler);
@@ -84,6 +91,13 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
             result = sb.toString();
         }
         return result;
+    }
+
+    private boolean isPathMatchingProfilerRouteBasePath(String path) {
+        String routeBasePath = MiniProfiler.getSettings().getRouteBasePath();
+        String slashLessRouteBasePath = routeBasePath.substring(0, routeBasePath.length() - 1);
+        String slashLessPath = path.substring(1);
+        return slashLessPath.startsWith(slashLessRouteBasePath);
     }
 
     public UserProvider getUserProvider() {
