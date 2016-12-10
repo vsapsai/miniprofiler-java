@@ -35,6 +35,11 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
             if (isPathMatchingProfilerRouteBasePath(path)) {
                 return MiniProfiler.NULL;
             }
+            for (String ignoredPath : MiniProfiler.getSettings().getIgnoredPaths()) {
+                if (path.startsWith(ignoredPath)) {
+                    return MiniProfiler.NULL;
+                }
+            }
         }
         MiniProfiler profiler = new MiniProfiler(getFullRequestUrl(currentRequest));
         profiler.setUser(userProvider.getUser(currentRequest));

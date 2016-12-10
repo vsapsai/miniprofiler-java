@@ -1,6 +1,10 @@
 package com.miniprofiler;
 
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import com.miniprofiler.storage.ConcurrentHashMapStorage;
 import com.miniprofiler.storage.Storage;
@@ -10,6 +14,7 @@ public class Settings {
     private Storage storage;
     private ProfilerProvider profilerProvider;
     private Clock clock = Clock.systemUTC();
+    private List<String> ignoredPaths = Arrays.asList("/content/", "/scripts/", "/favicon.ico");
     private String contextPath = "";
     private String routeBasePath = "mini-profiler-resources/";
     private int maxUnviewedProfiles = 20;
@@ -61,6 +66,14 @@ public class Settings {
 
     public Clock getClock() {
         return clock;
+    }
+
+    public List<String> getIgnoredPaths() {
+        return Collections.unmodifiableList(ignoredPaths);
+    }
+
+    public void setIgnoredPaths(List<String> ignoredPaths) {
+        this.ignoredPaths = new ArrayList<>(ignoredPaths);
     }
 
     // For unit testing.
