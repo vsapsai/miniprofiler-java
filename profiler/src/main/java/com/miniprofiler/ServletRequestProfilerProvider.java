@@ -8,7 +8,7 @@ import com.miniprofiler.storage.Storage;
 public class ServletRequestProfilerProvider implements ProfilerProvider {
     private static final String ATTRIBUTE_NAME = ":mini-profiler:";
 
-    private UserProvider userProvider = new IpAddressProvider();
+    private static UserProvider userProvider = new IpAddressProvider();
 
     public static MiniProfiler getProfilerFromRequest(ServletRequest request) {
         return (MiniProfiler)request.getAttribute(ATTRIBUTE_NAME);
@@ -100,11 +100,11 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
         return slashLessPath.startsWith(slashLessRouteBasePath);
     }
 
-    public UserProvider getUserProvider() {
+    public static UserProvider getUserProvider() {
         return userProvider;
     }
 
-    public void setUserProvider(UserProvider userProvider) {
-        this.userProvider = userProvider;
+    public static void setUserProvider(UserProvider userProvider) {
+        ServletRequestProfilerProvider.userProvider = userProvider;
     }
 }

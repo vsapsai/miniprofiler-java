@@ -176,6 +176,14 @@ public class RequestHandlerServlet extends HttpServlet {
 
         MiniProfiler.getSettings().ensureStorageStrategy();
         MiniProfiler profiler = MiniProfiler.getSettings().getStorage().load(id);
+
+        UserProvider userProvider = ServletRequestProfilerProvider.getUserProvider();
+        String user = null;
+        if (userProvider != null) {
+            user = userProvider.getUser(request);
+        }
+        MiniProfiler.getSettings().getStorage().setViewed(user, id);
+
         if (profiler == null) {
             if (isPopup) {
                 respondNotFound(response);
@@ -185,8 +193,21 @@ public class RequestHandlerServlet extends HttpServlet {
             return;
         }
 
+        boolean needsSave = false;
         if (profiler.getClientTimings() == null) {
             profiler.setClientTimings(ClientTimings.fromRequest(request));
+            if (profiler.getClientTimings() != null) {
+                needsSave = true;
+            }
+        }
+
+        if (!profiler.hasUserViewed()) {
+            profiler.setUserViewed(true);
+            needsSave = true;
+        }
+
+        if (needsSave) {
+            MiniProfiler.getSettings().getStorage().save(profiler);
         }
 
         if (isPopup) {
