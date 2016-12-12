@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /general.war
+    destination: /tmp/codedeploy-deployment-staging-area/
+  - source: /deployment-scripts/configure_http_port.xsl
+    destination: /tmp/codedeploy-deployment-staging-area/
+hooks:
+  ApplicationStop:
+    - location: deployment-scripts/stop_application.sh
+      timeout: 300
+  BeforeInstall:
+    - location: deployment-scripts/install_dependencies.sh
+      timeout: 300
+  ApplicationStart:
+    - location: deployment-scripts/write_codedeploy_config.sh
+    - location: deployment-scripts/start_application.sh
+      timeout: 300
+  ValidateService:
+    - location: deployment-scripts/basic_health_check.sh
