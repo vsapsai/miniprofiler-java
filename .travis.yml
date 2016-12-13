@@ -21,9 +21,18 @@ before_deploy:
 deploy:
   - provider: s3
     access_key_id: AKIAIEKS7QLLGJ3CSHMQ
-    secret_access_key:
+    secret_access_key: &1
       secure: Ro8TyktIeS816Qra6NSyiCgZGnH3h5ojlJkvoPs8G/d5Udr9X57p00QzI5LjJBUWr5sN1C2cC3JRFMlEfS/f5ltvfYY3yGvUJhFflyN7bs1V/A651OtM743Li/npTfLePMnDqr0jKSCsjfwSqZMmkk6Bl5B7yk34M9DOvG6eRCQcuFqHjl/ZgO5BZ+KkXgr/8RAoGDyO+ibEhHz2zmKTQz3r9j7QEwTzAtkTagbH3+Yg/MoeOag2+nodsoI8xQNu/QPasCNqL3HKHt+SLS/71UP8r+2c1e5D5OrvJz1qwZxlHyQ+gVHxVt7hJeEll1Vybf4FvZakxxmOpF2+5pFUBYFqR8nERz8iiqCDQOyhf9qAwWGcXf/U4S3moiS80LHM74eQSzca+ggeRQeY6k/1cldTciOy5yVH/DNPMeYH9lwsmVMmXXl30kW8eQlM6Dio13oBM/x8uwV+cEnRbd2bL5/TCrBNgIqBp3HSv+Jj4hdeBOALDYqSwol4XydIlElNk9hzTDJeqBvEEFN1nKYez8SOTZ+b12AQ1vLW0NWzpAaV0bzrRUksoqJsIf550papdy7agOoSwgFAJxz1gAz2tHxsO+Dhsdz513YEFywtWaS9t4hdEz9KGjp3Hd7T7pn7AD4JFuBWaucjRw7repSnWzyaDQqnoosxGu0ujv8kFEE=
     local_dir: upload_directory
     skip_cleanup: true
     region: us-west-2
     bucket: miniprofiler-demo-codedeploy
+  - provider: codedeploy
+    access_key_id: AKIAIEKS7QLLGJ3CSHMQ
+    secret_access_key: *1
+    region: us-west-2
+    bucket: miniprofiler-demo-codedeploy
+    key: MiniProfilerDemo.zip
+    bundle_type: zip
+    application: MiniProfilerDemo
+    deployment_group: Prod
