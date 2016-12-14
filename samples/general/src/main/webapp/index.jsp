@@ -9,8 +9,6 @@
     <miniprofiler:includes />
 </head>
 <body>
-    Continuous deployment works! <br >/
-
     Samples:
     <ul>
         <li><a href="scriptlets.jsp">Scriptlets</a></li>
