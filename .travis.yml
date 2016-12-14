@@ -16,7 +16,7 @@ before_deploy:
   - cp -r deployment-scripts/ build_artifacts/
   - cp appspec.yml build_artifacts/
   - mkdir -p upload_directory
-  - tar -czf upload_directory/MiniProfilerDemo.tar.gz build_artifacts/*
+  - tar -czf upload_directory/MiniProfilerDemo.tar.gz -C build_artifacts .
 
 deploy:
   - provider: s3
