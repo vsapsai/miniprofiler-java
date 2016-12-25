@@ -99,6 +99,9 @@ public class ServletRequestProfilerProvider implements ProfilerProvider {
     }
 
     private boolean isPathMatchingProfilerRouteBasePath(String path) {
+        if (path.isEmpty()) {
+            return false;
+        }
         String routeBasePath = MiniProfiler.getSettings().getRouteBasePath();
         String slashLessRouteBasePath = routeBasePath.substring(0, routeBasePath.length() - 1);
         String slashLessPath = path.substring(1);

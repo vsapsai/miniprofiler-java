@@ -1,1 +1,1 @@
-include "profiler", "samples:general"
+include "profiler", "samples:general", "samples:spring-web-mvc"

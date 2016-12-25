@@ -10,8 +10,8 @@ It is in early stage of development and doesn't have many features. Main differe
 
 During development use the following commands:
 
-* `./gradlew jettyRunWar` to run the sample;
-* `./gradlew jettyRunWarDebug` to debug the sample;
+* `./gradlew :samples:general:jettyRunWar` to run the sample;
+* `./gradlew :samples:general:jettyRunWarDebug` to debug the sample;
 * `./gradlew test` to run tests;
 * `./gradlew war` to build .war files.
 

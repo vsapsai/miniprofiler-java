@@ -1,0 +1,15 @@
+plugins {
+    id "org.akhikhl.gretty" version "1.4.0"
+}
+
+apply plugin: "war"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":profiler"),
+            "org.springframework:spring-webmvc:4.3+"
+    runtime "com.google.guava:guava:19.0"
+}
