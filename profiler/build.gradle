@@ -6,7 +6,8 @@ repositories {
 
 dependencies {
     compileOnly "javax.servlet:javax.servlet-api:3.1+",
-                "com.google.guava:guava:19.0"
+                "com.google.guava:guava:19.0",
+                "org.springframework:spring-webmvc:4.3+"
     compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3+",
             "commons-io:commons-io:2.4+",
             "org.apache.commons:commons-lang3:3.4+",
