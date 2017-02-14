@@ -24,10 +24,24 @@ public class RequestHandlerFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        MiniProfiler currentProfiler = ServletRequestProfilerProvider.getProfilerFromRequest(request);
-
+        // WARNING(vsapsai): writing unviewed profiler ids before the request
+        //     is handled is different from .NET implementation.  This is done
+        //     due to the way Spring Web MVC writes JSON output, it flushes
+        //     response before giving filters a chance to do post-processing.
+        //     Will need to investigate if this solution works in all cases or
+        //     if it would be better to provide a setting when to write
+        //     in response unviewed profiler ids.
+        writeUnviewedIds(request, response);
         chain.doFilter(request, response);
+    }
 
+    @Override
+    public void destroy() {
+        // Do nothing.
+    }
+
+    private static void writeUnviewedIds(ServletRequest request, ServletResponse response) {
+        MiniProfiler currentProfiler = ServletRequestProfilerProvider.getProfilerFromRequest(request);
         if ((currentProfiler == null) || currentProfiler.isNull()) {
             return;
         }
@@ -52,10 +66,5 @@ public class RequestHandlerFilter implements Filter {
                 httpResponse.setHeader("X-MiniProfiler-Ids", unviewedIdsString);
             }
         }
-    }
-
-    @Override
-    public void destroy() {
-        // Do nothing.
     }
 }
