@@ -28,6 +28,7 @@ copy_war_file_to_context() {
 }
 
 copy_war_file_to_context "general.war" "ROOT"
+copy_war_file_to_context "spring-web-mvc.war" "spring-web-mvc"
 
 # Configure the Tomcat server HTTP connector
 { which xsltproc; } || { apt-get install -y xsltproc; }

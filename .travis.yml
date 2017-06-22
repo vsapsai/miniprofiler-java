@@ -13,6 +13,7 @@ script:
 before_deploy:
   - mkdir -p build_artifacts
   - cp samples/general/build/libs/general.war build_artifacts/
+  - cp samples/spring-web-mvc/build/libs/spring-web-mvc.war build_artifacts/
   - cp -r deployment-scripts/ build_artifacts/
   - cp appspec.yml build_artifacts/
   - mkdir -p upload_directory

@@ -3,6 +3,8 @@ os: linux
 files:
   - source: /general.war
     destination: /tmp/codedeploy-deployment-staging-area/
+  - source: /spring-web-mvc.war
+    destination: /tmp/codedeploy-deployment-staging-area/
   - source: /deployment-scripts/configure_http_port.xsl
     destination: /tmp/codedeploy-deployment-staging-area/
 hooks:
