@@ -6,6 +6,11 @@ jdk:
 os:
   - linux
 
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 script:
   - ./gradlew test
   - ./gradlew war
