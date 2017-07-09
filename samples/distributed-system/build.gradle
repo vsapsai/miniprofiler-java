@@ -16,3 +16,8 @@ dependencies {
             "com.fasterxml.jackson.core:jackson-databind:2.8+"
     runtime "com.google.guava:guava:19.0"
 }
+
+farm {
+    webapp ":samples:distributed-system"
+    webapp ":samples:distributed-system-service"
+}
